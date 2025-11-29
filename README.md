@@ -173,7 +173,9 @@ MIT License - feel free to use this for your own projects!
 
 ## Acknowledgments
 
-Built as a Day 1 MVP to demonstrate the power of AI + simple web tech.
+Built with ❤️ by [Saurabh Singh](https://www.linkedin.com/in/saurabh-singh-822b66125/) (Software Engineer @ Adobe) as a Day 1 MVP to demonstrate the power of AI + simple web tech.
+
+**Connect:** [LinkedIn](https://www.linkedin.com/in/saurabh-singh-822b66125/) • [Twitter/X](https://x.com/sysdesign_ai) • [GitHub](https://github.com/saurabhs051)
 
 **Questions?** Open an issue or reach out!
 
@@ -185,5 +187,5 @@ Want early access to premium features (PNG/SVG export, templates, advanced layou
 
 **[⚡ Join the Early Access Waitlist](https://sysdesign.kit.com/ai-arch-early-access)**
 
-Or follow along: [Twitter/X](https://x.com/sysdesign_ai) • [GitHub](https://github.com/saurabhs051/ai-architecture-diagram-generator)
+Or follow along: [Twitter/X](https://x.com/sysdesign_ai) • [LinkedIn](https://www.linkedin.com/in/saurabh-singh-822b66125/) • [GitHub](https://github.com/saurabhs051)
 
