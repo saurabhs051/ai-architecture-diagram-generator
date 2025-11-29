@@ -2,7 +2,7 @@
 
 **Turn text descriptions into beautiful architecture diagrams instantly.**
 
-🔗 **[View Landing Page](YOUR_NOTION_PAGE_URL)** | 🚀 **[Try Live Demo](https://saurabhs051.github.io/ai-architecture-diagram-generator)**
+🔗 **[View Landing Page](https://cherry-saver-91d.notion.site/AI-Architecture-Diagram-Generator-64dedb8b0b48469ebd56ba520c7afd55)** | 🚀 **[Try Live Demo](https://saurabhs051.github.io/ai-architecture-diagram-generator)**
 
 ---
 
@@ -181,5 +181,5 @@ Built as a Day 1 MVP to demonstrate the power of AI + simple web tech.
 
 ## Get Updates
 
-Want to stay updated on new features? [Subscribe to updates](YOUR_CONVERTKIT_LINK)
+Want to stay updated on new features? [Follow on Twitter/X](https://x.com/sysdesign_ai) or [Star the repo on GitHub](https://github.com/saurabhs051/ai-architecture-diagram-generator)
 
