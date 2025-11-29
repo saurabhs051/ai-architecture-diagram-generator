@@ -1,15 +1,19 @@
 {
-  "name": "ai-arch-tool",
+  "name": "ai-architecture-diagram-generator",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "AI-powered architecture diagram generator. Describe your system in plain English, get a Mermaid diagram instantly.",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["ai", "architecture", "diagram", "mermaid", "generator", "llm", "openai", "claude"],
+  "author": "saurabhs051",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saurabhs051/ai-architecture-diagram-generator.git"
+  },
   "type": "commonjs",
   "dependencies": {
     "cors": "^2.8.5",
