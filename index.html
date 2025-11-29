@@ -2,138 +2,749 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>AI Arch -> Mermaid</title>
+  <title>AI Architecture Diagram Generator</title>
   <script src="https://unpkg.com/mermaid@10/dist/mermaid.min.js"></script>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body { 
-      font-family: Arial, sans-serif; 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
       padding: 20px; 
       max-width: 1200px;
       margin: 0 auto;
       background: #f5f5f5;
+      line-height: 1.6;
     }
     .container {
       background: white;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
     }
-    h2 {
+    h1 {
       color: #333;
       margin-top: 0;
+      font-size: 32px;
+    }
+    h2 {
+      color: #444;
+      margin-top: 30px;
+      font-size: 24px;
+    }
+    h3 {
+      color: #555;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+    .demo-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .demo-btn {
+      background: #2196F3;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .demo-btn:hover {
+      background: #1976D2;
+      transform: translateY(-2px);
+    }
+    .section {
+      margin: 30px 0;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border: 2px solid #e0e0e0;
+    }
+    .api-key-section {
+      background: #fff9e6;
+      border: 2px solid #ffd700;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      margin: 10px 0;
+      font-family: monospace;
+    }
+    input:focus {
+      outline: none;
+      border-color: #4CAF50;
     }
     textarea { 
       width: 100%; 
       height: 120px; 
-      padding: 10px;
+      padding: 12px;
       border: 2px solid #ddd;
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 14px;
       font-family: Arial, sans-serif;
-      box-sizing: border-box;
+      margin: 10px 0;
     }
     textarea:focus {
       outline: none;
       border-color: #4CAF50;
     }
-    button {
+    button.primary {
       background: #4CAF50;
       color: white;
-      padding: 12px 24px;
+      padding: 14px 28px;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
       margin-top: 10px;
+      transition: all 0.3s;
     }
-    button:hover {
+    button.primary:hover {
       background: #45a049;
+      transform: translateY(-2px);
     }
-    button:disabled {
+    button.primary:disabled {
       background: #ccc;
       cursor: not-allowed;
+      transform: none;
+    }
+    button.secondary {
+      background: white;
+      color: #2196F3;
+      padding: 10px 20px;
+      border: 2px solid #2196F3;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      margin: 5px;
+      transition: all 0.3s;
+    }
+    button.secondary:hover {
+      background: #2196F3;
+      color: white;
     }
     #diagram { 
       margin-top: 20px; 
-      border: 1px solid #ddd; 
-      padding: 20px;
-      background: #fafafa;
+      border: 2px solid #ddd; 
+      padding: 30px;
+      background: white;
+      border-radius: 8px;
+      min-height: 200px;
+    }
+    .info-box {
+      background: #e3f2fd;
+      padding: 15px;
+      border-left: 4px solid #2196F3;
+      margin: 15px 0;
       border-radius: 4px;
-      min-height: 100px;
+    }
+    .success-box {
+      background: #e8f5e9;
+      padding: 15px;
+      border-left: 4px solid #4CAF50;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .warning-box {
+      background: #fff3e0;
+      padding: 15px;
+      border-left: 4px solid #ff9800;
+      margin: 15px 0;
+      border-radius: 4px;
     }
     .example {
       background: #f0f7ff;
-      padding: 10px;
+      padding: 12px;
       border-left: 4px solid #2196F3;
       margin: 15px 0;
       font-style: italic;
       color: #555;
+      border-radius: 4px;
     }
     .loading {
       color: #666;
       font-style: italic;
+      text-align: center;
+      padding: 40px;
+    }
+    .collapsible {
+      cursor: pointer;
+      padding: 12px;
+      background: #f1f1f1;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      margin: 10px 0;
+      width: 100%;
+      transition: all 0.3s;
+    }
+    .collapsible:hover {
+      background: #e1e1e1;
+    }
+    .collapsible:after {
+      content: '▼';
+      float: right;
+      margin-left: 5px;
+    }
+    .collapsible.active:after {
+      content: '▲';
+    }
+    .collapsible-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    .provider-buttons {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    .provider-btn {
+      padding: 8px 16px;
+      border: 2px solid #ddd;
+      background: white;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .provider-btn.active {
+      background: #4CAF50;
+      color: white;
+      border-color: #4CAF50;
+    }
+    .provider-btn:hover {
+      border-color: #4CAF50;
+    }
+    a {
+      color: #2196F3;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .github-link {
+      display: inline-block;
+      background: #24292e;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      margin: 20px 0;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .github-link:hover {
+      background: #1a1e22;
+      text-decoration: none;
+    }
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      .demo-buttons {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>AI Architecture Diagram Generator — Day 1 MVP</h2>
-    <p>Describe a system in one paragraph and get an instant architecture diagram.</p>
+    <h1>🏗️ AI Architecture Diagram Generator</h1>
+    <p class="subtitle">Transform text descriptions into beautiful architecture diagrams instantly using AI.</p>
     
-    <div class="example">
-      <strong>Example:</strong> "A web service receives HTTP requests from users, validates the input, writes to a PostgreSQL database, publishes a job to a RabbitMQ queue for a worker process to handle, and returns a JSON response to the client."
+    <a href="https://github.com/saurabhs051/ai-architecture-diagram-generator" target="_blank" class="github-link">
+      ⭐ View on GitHub
+    </a>
+
+    <!-- DEMO EXAMPLES SECTION -->
+    <h2>🎬 Try Demo Examples (Instant!)</h2>
+    <p>Click any example below to see it visualized immediately:</p>
+    
+    <div class="demo-buttons">
+      <button class="demo-btn" onclick="loadDemo('microservices')">🛒 E-commerce Microservices</button>
+      <button class="demo-btn" onclick="loadDemo('api')">🔌 REST API Gateway</button>
+      <button class="demo-btn" onclick="loadDemo('data')">📊 Data Pipeline</button>
+      <button class="demo-btn" onclick="loadDemo('auth')">🔐 Authentication System</button>
     </div>
     
-    <textarea id="input" placeholder="Describe your system architecture here..."></textarea>
-    <br/>
-    <button id="submit">Generate Diagram</button>
     <div id="diagram"></div>
+
+    <!-- GENERATE YOUR OWN SECTION -->
+    <div class="section">
+      <h2>✨ Generate Your Own Diagram</h2>
+      <p>Want to create diagrams for your own systems? You have two options:</p>
+
+      <!-- Option 1: Quick Demo (No API Key) -->
+      <div class="info-box">
+        <strong>🎯 Option 1: Try with Example Text</strong><br>
+        Enter your system description below and we'll show you what the output would look like using our demo examples as reference.
+      </div>
+
+      <!-- Option 2: Full Power (With API Key) -->
+      <button class="collapsible" onclick="toggleApiKey()">
+        🔑 Option 2: Use Your Own AI API Key (Full Power)
+      </button>
+      <div class="collapsible-content" id="apiKeySection">
+        <div class="api-key-section" style="margin-top: 15px; padding: 20px;">
+          <h3>Get Started in 2 Minutes:</h3>
+          <ol>
+            <li><strong>Get a free API key</strong> from one of these providers:
+              <ul>
+                <li><a href="https://console.groq.com" target="_blank">Groq</a> - Free, fast, recommended! ⚡</li>
+                <li><a href="https://openrouter.ai" target="_blank">OpenRouter</a> - $0.10 free credits, multiple models</li>
+                <li><a href="https://platform.openai.com" target="_blank">OpenAI</a> - $5 free credits</li>
+              </ul>
+            </li>
+            <li>Select your provider below</li>
+            <li>Paste your API key</li>
+            <li>Generate unlimited diagrams! 🚀</li>
+          </ol>
+
+          <div class="success-box">
+            <strong>🔒 Privacy:</strong> Your API key is stored only in your browser and never sent to our servers. All API calls go directly from your browser to the AI provider.
+          </div>
+
+          <h3>Select AI Provider:</h3>
+          <div class="provider-buttons">
+            <button class="provider-btn active" onclick="selectProvider('groq')" id="btn-groq">Groq (Free)</button>
+            <button class="provider-btn" onclick="selectProvider('openrouter')" id="btn-openrouter">OpenRouter</button>
+            <button class="provider-btn" onclick="selectProvider('openai')" id="btn-openai">OpenAI</button>
+          </div>
+
+          <label for="apiKey"><strong>API Key:</strong></label>
+          <input type="password" id="apiKey" placeholder="Paste your API key here..." />
+          
+          <button class="secondary" onclick="saveApiKey()">💾 Save Key (Local Only)</button>
+          <button class="secondary" onclick="clearApiKey()">🗑️ Clear Key</button>
+          <button class="secondary" onclick="testApiKey()">🧪 Test Key</button>
+          
+          <div id="keyStatus"></div>
+        </div>
+      </div>
+
+      <h3>Your System Description:</h3>
+      <div class="example">
+        <strong>Example:</strong> "A web application where users upload images. The images are stored in AWS S3, metadata goes to MongoDB. A Lambda function processes images asynchronously and sends notifications via SNS to users."
+      </div>
+      
+      <textarea id="input" placeholder="Describe your system architecture here..."></textarea>
+      
+      <button class="primary" id="submit" onclick="generateDiagram()">🚀 Generate Diagram</button>
+      
+      <div class="warning-box" id="noKeyWarning" style="display: none;">
+        <strong>⚠️ No API Key Detected</strong><br>
+        To generate custom diagrams, please add your API key above, or try our demo examples!
+      </div>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <div class="info-box" style="margin-top: 40px;">
+      <h3 style="margin-top: 0;">📚 About This Tool</h3>
+      <p>This tool uses Large Language Models (LLMs) to convert plain English descriptions into Mermaid diagrams. It's open source and free to use!</p>
+      <p><strong>How it works:</strong></p>
+      <ol style="margin-bottom: 0;">
+        <li>You describe your system architecture in natural language</li>
+        <li>AI (Claude, GPT, or Llama) converts it to Mermaid syntax</li>
+        <li>Mermaid.js renders a beautiful diagram</li>
+        <li>Perfect for documentation, presentations, and planning!</li>
+      </ol>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding-top: 30px; border-top: 2px solid #eee; color: #666;">
+      <p>Built with ❤️ by <a href="https://github.com/saurabhs051">Saurabh Singh</a> • 
+      <a href="https://github.com/saurabhs051/ai-architecture-diagram-generator">Star on GitHub</a> • 
+      MIT License</p>
+    </div>
   </div>
 
 <script>
 mermaid.initialize({ startOnLoad: false });
 
-document.getElementById('submit').addEventListener('click', async () => {
+// Demo examples with pre-generated Mermaid code
+const demoExamples = {
+  microservices: {
+    title: "E-commerce Microservices Architecture",
+    description: "An e-commerce platform where users browse products through a React frontend, which talks to a Node.js API Gateway. The gateway authenticates users via Auth0, routes requests to a Product microservice backed by MongoDB, and a Payment microservice using Stripe API. Orders are queued in Kafka, processed by an Order Fulfillment worker, and notifications are sent via SendGrid. All services log to Elasticsearch and metrics go to Prometheus.",
+    mermaid: `graph TB
+    Browser[User Browser]
+    ReactFE[React Frontend]
+    APIGateway[Node.js API Gateway]
+    Auth0[Auth0]
+    ProductService[Product Microservice]
+    PaymentService[Payment Microservice]
+    MongoDB[(MongoDB)]
+    Stripe[Stripe API]
+    Kafka[Kafka Queue]
+    OrderWorker[Order Fulfillment Worker]
+    SendGrid[SendGrid]
+    Elasticsearch[(Elasticsearch)]
+    Prometheus[(Prometheus)]
+    
+    Browser --> ReactFE
+    ReactFE --> APIGateway
+    APIGateway --> Auth0
+    APIGateway --> ProductService
+    APIGateway --> PaymentService
+    ProductService --> MongoDB
+    PaymentService --> Stripe
+    PaymentService --> Kafka
+    Kafka --> OrderWorker
+    OrderWorker --> SendGrid
+    ProductService --> Elasticsearch
+    PaymentService --> Elasticsearch
+    OrderWorker --> Prometheus`
+  },
+  api: {
+    title: "REST API Gateway Architecture",
+    description: "A web service receives HTTP requests from users, validates the input, writes to a PostgreSQL database, publishes a job to a RabbitMQ queue for a worker process to handle, and returns a JSON response to the client.",
+    mermaid: `graph LR
+    Client[Client/User]
+    API[REST API Server]
+    Validator[Input Validator]
+    DB[(PostgreSQL)]
+    Queue[RabbitMQ]
+    Worker[Background Worker]
+    
+    Client -->|HTTP Request| API
+    API --> Validator
+    Validator -->|Valid Data| DB
+    Validator -->|Publish Job| Queue
+    Queue --> Worker
+    API -->|JSON Response| Client
+    Worker -->|Process| DB`
+  },
+  data: {
+    title: "Data Processing Pipeline",
+    description: "A data pipeline where raw data arrives via Kafka, gets processed by Apache Spark, transformed data is stored in AWS S3, metadata goes to PostgreSQL, and a dashboard queries both S3 and PostgreSQL to display analytics.",
+    mermaid: `graph TD
+    Source[Data Sources]
+    Kafka[Kafka Stream]
+    Spark[Apache Spark]
+    S3[(AWS S3)]
+    Postgres[(PostgreSQL)]
+    Dashboard[Analytics Dashboard]
+    
+    Source --> Kafka
+    Kafka --> Spark
+    Spark -->|Processed Data| S3
+    Spark -->|Metadata| Postgres
+    S3 --> Dashboard
+    Postgres --> Dashboard`
+  },
+  auth: {
+    title: "Authentication & Authorization System",
+    description: "A user authentication system where users log in through a web frontend. The auth service validates credentials against a user database, generates JWT tokens, stores sessions in Redis, and protects API endpoints with middleware that verifies tokens before allowing access to protected resources.",
+    mermaid: `graph TB
+    User[User]
+    Frontend[Web Frontend]
+    AuthService[Auth Service]
+    UserDB[(User Database)]
+    Redis[(Redis Cache)]
+    JWT[JWT Token Generator]
+    Middleware[Auth Middleware]
+    API[Protected API]
+    Resources[Protected Resources]
+    
+    User --> Frontend
+    Frontend -->|Login Request| AuthService
+    AuthService --> UserDB
+    UserDB -->|Valid User| JWT
+    JWT -->|Token| Redis
+    JWT -->|Token| Frontend
+    Frontend -->|Request + Token| Middleware
+    Middleware --> Redis
+    Redis -->|Valid Token| API
+    API --> Resources`
+  }
+};
+
+// State
+let currentProvider = 'groq';
+let apiKey = localStorage.getItem('aiarch_apikey') || '';
+let provider = localStorage.getItem('aiarch_provider') || 'groq';
+
+// Initialize
+window.addEventListener('DOMContentLoaded', () => {
+  if (apiKey) {
+    document.getElementById('apiKey').value = apiKey;
+    selectProvider(provider);
+    showKeyStatus('✅ API key loaded from browser storage', 'success');
+  }
+  // Load first demo on page load
+  loadDemo('microservices');
+});
+
+// Load demo examples
+function loadDemo(exampleKey) {
+  const demo = demoExamples[exampleKey];
+  if (!demo) return;
+  
+  const diagram = document.getElementById('diagram');
+  diagram.innerHTML = '<div class="loading">Loading demo...</div>';
+  
+  setTimeout(async () => {
+    try {
+      diagram.innerHTML = `
+        <div style="background: #e3f2fd; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+          <strong>📝 Demo: ${demo.title}</strong><br>
+          <small style="color: #555;">${demo.description}</small>
+        </div>
+        <div class="mermaid">${demo.mermaid}</div>
+      `;
+      await mermaid.init(undefined, diagram.querySelectorAll('.mermaid'));
+    } catch (e) {
+      diagram.innerHTML = `<div style="color: red;">Error rendering diagram: ${e.message}</div>`;
+    }
+  }, 300);
+}
+
+// Toggle API key section
+function toggleApiKey() {
+  const section = document.getElementById('apiKeySection');
+  const button = document.querySelector('.collapsible');
+  
+  if (section.style.maxHeight) {
+    section.style.maxHeight = null;
+    button.classList.remove('active');
+  } else {
+    section.style.maxHeight = section.scrollHeight + 'px';
+    button.classList.add('active');
+  }
+}
+
+// Provider selection
+function selectProvider(providerName) {
+  currentProvider = providerName;
+  document.querySelectorAll('.provider-btn').forEach(btn => btn.classList.remove('active'));
+  document.getElementById(`btn-${providerName}`).classList.add('active');
+}
+
+// Save API key
+function saveApiKey() {
+  const key = document.getElementById('apiKey').value.trim();
+  if (!key) {
+    showKeyStatus('⚠️ Please enter an API key', 'warning');
+    return;
+  }
+  
+  localStorage.setItem('aiarch_apikey', key);
+  localStorage.setItem('aiarch_provider', currentProvider);
+  apiKey = key;
+  provider = currentProvider;
+  
+  showKeyStatus('✅ API key saved in browser (local storage only)', 'success');
+}
+
+// Clear API key
+function clearApiKey() {
+  localStorage.removeItem('aiarch_apikey');
+  localStorage.removeItem('aiarch_provider');
+  document.getElementById('apiKey').value = '';
+  apiKey = '';
+  showKeyStatus('🗑️ API key cleared', 'info');
+}
+
+// Test API key
+async function testApiKey() {
+  const key = document.getElementById('apiKey').value.trim();
+  if (!key) {
+    showKeyStatus('⚠️ Please enter an API key first', 'warning');
+    return;
+  }
+  
+  showKeyStatus('🧪 Testing API key...', 'info');
+  
+  try {
+    const config = getProviderConfig(currentProvider, key);
+    const response = await fetch(config.url, {
+      method: 'POST',
+      headers: config.headers,
+      body: JSON.stringify({
+        model: config.model,
+        messages: [{ role: 'user', content: 'Say "Hello" if you receive this.' }],
+        max_tokens: 20
+      })
+    });
+    
+    if (response.ok) {
+      showKeyStatus('✅ API key is valid! You can now generate diagrams.', 'success');
+      saveApiKey();
+    } else {
+      const error = await response.text();
+      showKeyStatus(`❌ API key test failed: ${response.status} ${error}`, 'error');
+    }
+  } catch (e) {
+    showKeyStatus(`❌ Connection error: ${e.message}`, 'error');
+  }
+}
+
+// Show key status message
+function showKeyStatus(message, type) {
+  const status = document.getElementById('keyStatus');
+  const colors = {
+    success: '#4CAF50',
+    error: '#f44336',
+    warning: '#ff9800',
+    info: '#2196F3'
+  };
+  
+  status.innerHTML = `
+    <div style="margin-top: 15px; padding: 12px; background: ${colors[type]}22; 
+                border-left: 4px solid ${colors[type]}; border-radius: 4px;">
+      ${message}
+    </div>
+  `;
+}
+
+// Get provider configuration
+function getProviderConfig(providerName, apiKey) {
+  const configs = {
+    groq: {
+      url: 'https://api.groq.com/openai/v1/chat/completions',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      model: 'llama-3.1-70b-versatile'
+    },
+    openrouter: {
+      url: 'https://openrouter.ai/api/v1/chat/completions',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': window.location.href,
+        'X-Title': 'AI Architecture Diagram Generator'
+      },
+      model: 'anthropic/claude-3.5-sonnet'
+    },
+    openai: {
+      url: 'https://api.openai.com/v1/chat/completions',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      model: 'gpt-4o-mini'
+    }
+  };
+  
+  return configs[providerName];
+}
+
+// Generate diagram
+async function generateDiagram() {
   const text = document.getElementById('input').value.trim();
-  if (!text) return alert('Please write a system description first');
+  if (!text) {
+    alert('Please describe your system architecture first!');
+    return;
+  }
+  
+  const key = apiKey || document.getElementById('apiKey').value.trim();
+  
+  if (!key) {
+    document.getElementById('noKeyWarning').style.display = 'block';
+    // Scroll to API key section
+    document.querySelector('.collapsible').scrollIntoView({ behavior: 'smooth' });
+    return;
+  }
+  
+  document.getElementById('noKeyWarning').style.display = 'none';
   
   const button = document.getElementById('submit');
   button.disabled = true;
-  button.textContent = 'Generating...';
+  button.textContent = '⏳ Generating...';
   
-  document.getElementById('diagram').innerHTML = '<div class="loading">Generating your architecture diagram...</div>';
+  const diagram = document.getElementById('diagram');
+  diagram.innerHTML = '<div class="loading">🤖 AI is analyzing your architecture...<br>This may take 5-10 seconds...</div>';
   
   try {
-    const resp = await fetch('http://localhost:3000/api/diagram', {
+    const config = getProviderConfig(provider, key);
+    
+    const prompt = `You are a tool that converts system architecture descriptions into Mermaid diagrams.
+
+Rules:
+- Respond ONLY with valid Mermaid syntax (graph TD or graph LR format)
+- Use clear, descriptive node names
+- Show the main components and their relationships
+- Use appropriate arrow styles (-->, ---|, etc.)
+- Do NOT add any explanatory text, code blocks, or markdown formatting
+- Start directly with "graph TD" or "graph LR"
+
+System description:
+"""${text}"""
+
+Generate the Mermaid diagram:`;
+
+    const response = await fetch(config.url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text })
+      headers: config.headers,
+      body: JSON.stringify({
+        model: config.model,
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 800,
+        temperature: 0.2
+      })
     });
     
-    const data = await resp.json();
-    
-    if (data.error) {
-      throw new Error(data.error);
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`API Error (${response.status}): ${errorText}`);
     }
     
-    const mermaidCode = data.mermaid || 'graph TD\\nA[Error] --> B[No output]';
+    const data = await response.json();
+    let mermaidCode = data.choices[0].message.content.trim();
     
-    // render mermaid
-    const container = document.getElementById('diagram');
-    container.innerHTML = `<div class="mermaid">${mermaidCode}</div>`;
+    // Clean up the response
+    mermaidCode = mermaidCode.replace(/```mermaid\n?/g, '').replace(/```\n?/g, '').trim();
     
-    // render
-    await mermaid.init(undefined, container.querySelectorAll('.mermaid'));
+    // Render the diagram
+    diagram.innerHTML = `
+      <div style="background: #e8f5e9; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+        <strong>✅ Generated Successfully!</strong><br>
+        <small style="color: #555;">Your custom architecture diagram</small>
+      </div>
+      <div class="mermaid">${mermaidCode}</div>
+    `;
+    
+    await mermaid.init(undefined, diagram.querySelectorAll('.mermaid'));
     
   } catch (e) {
-    console.error(e);
-    document.getElementById('diagram').innerHTML = `<div style="color: red;">Error: ${e.message}</div>`;
+    console.error('Error:', e);
+    diagram.innerHTML = `
+      <div style="color: #f44336; padding: 20px; background: #ffebee; border-radius: 6px;">
+        <strong>❌ Error:</strong> ${e.message}<br><br>
+        <strong>Troubleshooting:</strong>
+        <ul>
+          <li>Check if your API key is valid</li>
+          <li>Make sure you have credits/quota remaining</li>
+          <li>Try testing your API key using the "Test Key" button above</li>
+          <li>Check browser console for detailed errors</li>
+        </ul>
+      </div>
+    `;
   } finally {
     button.disabled = false;
-    button.textContent = 'Generate Diagram';
+    button.textContent = '🚀 Generate Diagram';
   }
-});
+}
 </script>
 </body>
 </html>
-
