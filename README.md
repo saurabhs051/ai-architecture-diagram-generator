@@ -181,5 +181,9 @@ Built as a Day 1 MVP to demonstrate the power of AI + simple web tech.
 
 ## Get Updates
 
-Want to stay updated on new features? [Follow on Twitter/X](https://x.com/sysdesign_ai) or [Star the repo on GitHub](https://github.com/saurabhs051/ai-architecture-diagram-generator)
+Want early access to premium features (PNG/SVG export, templates, advanced layouts)?
+
+**[⚡ Join the Early Access Waitlist](https://sysdesign.kit.com/ai-arch-early-access)**
+
+Or follow along: [Twitter/X](https://x.com/sysdesign_ai) • [GitHub](https://github.com/saurabhs051/ai-architecture-diagram-generator)
 
